@@ -5,4 +5,4 @@ Major Frameworks and languages used are : Django, Javascript, Bootstrap, Html/Cs
 
 To run this you need to create your virtual enviroment and then install the required things.
 
-You can also download the demo video of this project from the main page of this repository.
+You can also download the demo video (Emotion Analyser Mp4) of this project from the main page of this repository.
