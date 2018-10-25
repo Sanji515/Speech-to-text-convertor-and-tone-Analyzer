@@ -1,0 +1,378 @@
+{% extends 'blog/Base.html' %}
+{% load static %}
+
+{% block css %}
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+	<style type="text/css">
+		html, body {
+		   height: 100%;margin: 0; 
+		   background: radial-gradient(circle farthest-corner at center, #fff 0%, #E0E0E0 100%);
+		} 
+		#info {
+		    font-size: 20px;
+		}
+		#div_start {
+		    margin-left:100px;
+		}
+		#headline {
+		    text-decoration: none
+		}
+		#results {
+		    font-size: 14px;
+		    font-weight: bold;
+		    border: 1px solid #ddd;
+		    padding: 15px;
+		    text-align: left;
+		    min-height: 150px;
+		    background: #fff;
+		}
+		#start_button {
+		    border: 0;
+		    background-color:transparent;
+		    padding: 0;
+		}
+		.interim {
+		    color: gray;
+		}
+		.final {
+		    color: black;
+		    padding-right: 3px;
+		}
+		.button {
+		    display: none;
+		}
+		.marquee {
+		    margin: 20px auto;
+		}
+
+		#buttons {
+		    margin: 10px 0;
+		    position: relative;
+		    top: -50px;
+		}
+
+		    #copy {
+		    margin-top: 20px;
+		    }
+
+		    #copy > div {
+		    display: none;
+		    margin: 0 70px;
+		    }
+	#x{
+	   border:1px solid grey;
+	   margin-left:20px;
+   }
+   #textArea{
+  
+   margin-bottom: 10px;
+   border:1px solid grey;
+   border-radius:10px;
+   }
+   #info_start{
+   margin-left:25px;
+   }
+
+    </style>
+
+{% endblock %}
+
+{% block body %}
+
+{% block navbar %}
+
+	{% include 'blog/navbar.html' %}
+{% endblock %}
+<div class="ui grid">
+	<div id='x' class="ui nine wide column">
+		<div id="info">
+	          <p id="info_start">
+	          	<center>
+	          		
+	            <b><h2>Click on the Microphone To Analyze your Tone</h2></b>
+	           
+	            </center>
+	          </p>
+	          <div id="info_speak_now" style="display:none;margin-left:150px;">
+	            <center>
+	            	
+				<b><h2>Recording.......</h2></b>
+	            </center>
+	          </div>
+	          <p id="info_no_speech" style="display:none">
+	            No speech was detected. You may need to adjust your <a href=
+	            "//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">microphone
+	            settings</a>.
+	          </p>
+	          <p id="info_no_microphone" style="display:none">
+	            No microphone was found. Ensure that a microphone is installed and that
+	            <a href="//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">
+	            microphone settings</a> are configured correctly.
+	          </p>
+	          <p id="info_allow" style="display:none">
+	            Click the "Allow" button above to enable your microphone.
+	          </p>
+	          <p id="info_denied" style="display:none">
+	            Permission to use microphone was denied.
+	          </p>
+	          <p id="info_blocked" style="display:none">
+	            Permission to use microphone is blocked. To change, go to
+	            chrome://settings/contentExceptions#media-stream
+	          </p>
+	          <p id="info_upgrade" style="display:none">
+	            Web Speech API is not supported by this browser. Upgrade to <a href=
+	            "//www.google.com/chrome">Chrome</a> version 25 or later.
+	          </p>
+	    </div>
+		<br>
+
+		<div class="container">
+			<div class="ui form">
+				<div class="field">
+					<textarea id="textArea" style="font-size: 25px; height: 200px;"></textarea>
+				</div>
+			</div>
+		</div>
+
+		<div class="ui divider"></div>
+
+		<div class="ui grid">
+			<div class="ui five wide column" style="margin-left: 100px;">
+				<select id="select_dialet" class="ui massive search dropdown" onchange="leaveChange()">
+				  <option value="en-IN">English</option>
+				  <option value="hi_IN">Hindi</option>
+				  <option value="te-IN">Telugu</option>
+				  <option value="ta-IN">Tamil</option>
+				</select>
+			</div>
+		    <div id="div_start" class="ui five wide column">
+			    <button class="ui button" type="submit" id="startRecognition" style="width:300px;margin-bottom:50px;border-radius:10px;"><img alt="Start" style="border-radius:50px;"onclick="changeImage()" id="imgClickAndChange"
+			          src="//google.com/intl/en/chrome/assets/common/images/content/mic.gif">
+			    </button>
+		    </div>
+		</div>
+
+	<!-- 	<button id="stopRecognition">Stop Recognition</button> -->
+	
+
+
+		<div class="ui divider"></div>
+
+		<form method="GET">{% csrf_token %}
+			<center>
+			<button class="ui massive button" id="my_form" style="width:300px;margin-bottom:10px;border-radius:10px;" type="button">Translate & Analyse</button>
+			</center>
+		</form>
+
+		<div class="ui divider"></div>
+
+		<!-- <a class="ui primary" href="{% url 'translate' %}">Translate</a> -->
+
+	    
+	</div>
+
+	<div class="ui five wide column">
+		<div class="container">
+     <h2>Your Emotion</h2>
+        
+      <h2 id="demo1"></h2>
+      <div class="w3-light-grey">
+      <div id="myBar1" class="w3-grey" style="height:24px;width:0"></div> 
+      </div>
+
+      <h2 id="demo2"></h2>
+      <div class="w3-light-grey">
+          <div id="myBar2" class="w3-grey" style="height:24px;width:0"></div> 
+      </div>
+
+      <h2 id="demo3"></h2>
+      <div class="w3-light-grey">
+          <div id="myBar3" class="w3-grey" style="height:24px;width:0"></div> 
+      </div>
+
+      <h2 id="demo4"></h2>
+      <div class="w3-light-grey">
+          <div id="myBar4" class="w3-grey" style="height:24px;width:0"></div> 
+      </div>
+
+      <h2 id="demo5"></h2>
+      <div class="w3-light-grey">
+          <div id="myBar5" class="w3-grey" style="height:24px;width:0"></div> 
+      </div>
+
+      <h2 id="demo6"></h2>
+      <div class="w3-light-grey">
+          <div id="myBar6" class="w3-grey" style="height:24px;width:0"></div> 
+      </div>
+
+      <h2 id="demo7"></h2>
+      <div class="w3-light-grey">
+          <div id="myBar7" class="w3-grey" style="height:24px;width:0"></div> 
+      </div>
+
+      <h2 style="margin-left:10px;">Translated Text:</h2>
+
+		<div class="jumbotron" id ="1" style="font-size: 25px;"></div>
+</div>
+	</div>
+
+</div>
+
+
+	<!-- <h1>{{ result1 }}</h1> -->
+{% endblock %}
+
+
+
+{% block javascript %}
+
+<script>
+
+var st;
+var recognizing = false;
+var recognition;
+
+function changeImage() {
+
+        // if (document.getElementById("imgClickAndChange").src = "//google.com/intl/en/chrome/assets/common/images/content/mic.gif") 
+        // {
+        //     document.getElementById("imgClickAndChange").src = "//google.com/intl/en/chrome/assets/common/images/content/mic-animate.gif";
+        // }
+        // else if(document.getElementById("imgClickAndChange").src = "//google.com/intl/en/chrome/assets/common/images/content/mic-animate.gif")
+        // {
+        //     document.getElementById("imgClickAndChange").src = "//google.com/intl/en/chrome/assets/common/images/content/mic.gif";
+        // }
+
+        if(recognizing = true){
+			recognition.stop();
+			recognizing = false;
+			showInfo('info_start');
+			document.getElementById("imgClickAndChange").src = "//google.com/intl/en/chrome/assets/common/images/content/mic.gif";
+			return;
+		}
+       
+}
+
+function leaveChange() {
+    st = document.getElementById("select_dialet").value
+}
+
+
+
+$(function () {
+
+  try {
+    recognition = new webkitSpeechRecognition();
+  } catch (e) {
+    recognition = Object;
+  }
+  recognition.continuous = true;
+  recognition.interimResults = true; 
+  
+
+  recognition.onresult = function (event) {
+    var txtRec = '';
+    for (var i = event.resultIndex; i < event.results.length; ++i) {
+      txtRec += event.results[i][0].transcript;
+      recognition.continuous = true;
+    }
+    $('#textArea').val(txtRec);
+  };
+  $('#startRecognition').click(function () {
+  	recognition.lang =st ;
+  	recognition.start();
+  	showInfo('info_speak_now');
+  	recognizing = true;
+  	showInfo('info_speak_now');
+    document.getElementById("imgClickAndChange").src = "//google.com/intl/en/chrome/assets/common/images/content/mic-animate.gif";
+    $('#textArea').focus();
+    
+  });
+  // $('#stopRecognition').click(function () {
+  //   recognition.stop();
+  // });
+});
+
+var l1 = [];
+var l2 = [];
+
+$("#my_form").click(function (e) {
+  e.preventDefault();
+  console.log("sad");
+      var username = $("#textArea").val();
+      console.log(username);
+      $.ajax({
+        url: '/blog/translate',
+        type: 'GET',
+        data: {
+          'username': username,
+        },
+        dataType: 'json',
+        success: function (data) {
+          console.log(data["result"]);
+          document.getElementById("1").innerHTML = data["result"];
+          
+
+        
+          var list1 = data["data_list"]
+          l1 = [];
+          l2 = [];
+          for(var i=0;i<list1.length;i++){
+            console.log(list1[i]);
+            if(i%2==0)
+              l1.push(list1[i]);
+            else
+              l2.push(list1[i]);
+          }
+          console.log(l1);
+          console.log(l2);
+          /*document.getElementById("2").innerHTML = l1;
+          document.getElementById("3").innerHTML = l2;
+        */
+        move();
+        
+
+        }
+      });
+
+});
+
+
+function showInfo(s) {
+  if (s) {
+    for (var child = info.firstChild; child; child = child.nextSibling) {
+      if (child.style) {
+        child.style.display = child.id == s ? 'inline' : 'none';
+      }
+    }
+    info.style.visibility = 'visible';
+  } else {
+    info.style.visibility = 'hidden';
+  }
+}
+
+function move() {
+  var i;
+  for(i=1;i<=7;i++){
+      var elem1 = document.getElementById("myBar"+i);
+      width = 0;   
+      elem1.style.width = width+'%'; 
+  }
+  for(i=1;i<=l2.length;i++){
+      var elem1 = document.getElementById("myBar"+i);   
+      width = Math.round(Number(l2[i-1]*100))
+      elem1.style.width = width + '%'; 
+  }
+
+    for(i=1;i<=l1.length;i++){
+      document.getElementById("demo"+i).innerHTML = l1[i-1];
+  }
+}
+
+
+</script>
+
+{% endblock %}
