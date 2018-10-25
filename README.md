@@ -4,3 +4,5 @@ In this Project we have made use of Watson API to convert Speech into text and t
 Major Frameworks and languages used are : Django, Javascript, Bootstrap, Html/Css
 
 To run this you need to create your virtual enviroment and then install the required things.
+
+You can also download the demo video of this project from the main page of this repository.
