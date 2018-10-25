@@ -4,6 +4,8 @@ In this Project we have made use of Watson API to convert Speech into text and t
 Major Frameworks and languages used are : Django, Javascript, Bootstrap, Html/Css
 
 To run this you need to create your virtual enviroment and then install the required things.
+
+### You can also download the video (Emotion Analyser Mp4) of this project form the main page of this repo
 ### Here are some of the screenshots for the reference
 
 ![speech to text 1](https://user-images.githubusercontent.com/37772172/47526961-34d59600-d856-11e8-8b6f-8f1aae634df7.png)
