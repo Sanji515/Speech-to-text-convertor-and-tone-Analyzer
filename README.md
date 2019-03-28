@@ -1,4 +1,4 @@
-# Speech-to-text-convertor-and-tone-Analyzer
+# Speech-to-text-convertor-&-tone-Analyzer
 In this Project we have made use of Watson API to convert Speech into text and then to analyse it's tone i.e whether the tone of text is sad, happy, anger etc.
 
 Major Frameworks and languages used are : Django, Javascript, Semantic UI, Html/Css
