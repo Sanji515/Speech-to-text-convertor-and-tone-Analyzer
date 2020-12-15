@@ -28,6 +28,8 @@ To run this you need to create your virtual enviroment and then install the requ
 * Migrate the changes to the database `$ python manage.py migrate`
 * Run the server `$ python manage.py runserver`
 
+That's it. Open web browser and hit the url [http://127.0.0.1:8000](http://127.0.0.1:8000)
+
 
 ### You can also download the video (Emotion Analyzer Mp4) of this project form the main page of this repo
 ### Here are some of the screenshots for the reference
