@@ -5,6 +5,30 @@ Major Frameworks and languages used are : Django, Javascript, Semantic UI, Html/
 
 To run this you need to create your virtual enviroment and then install the required things.
 
+* Clone using `$ git clone https://github.com/Sanji515/Speech-to-text-convertor-and-tone-Analyzer.git speech-to-text && cd speech-to-text`
+
+## Run
+
+* Install virtualenv
+    - on Ubuntu: `$ sudo apt install python-virtualenv`
+    - on Windows: `$ pip install virtualenv`
+    
+* Create a virtual environment
+    - on Ubuntu: `$ virtualenv venv -p python3.6`
+    - on Windows: `$ virtualenv venv`
+    
+* Activate the environment:
+    - on Ubuntu: `$ source venv/bin/activate`
+    - on Windows: `$ ./venv/Scripts/activate`
+    
+* Install the requirements:
+    - `$ pip install -r requirements.txt`
+
+* Make migrations `$ python manage.py makemigrations`
+* Migrate the changes to the database `$ python manage.py migrate`
+* Run the server `$ python manage.py runserver`
+
+
 ### You can also download the video (Emotion Analyzer Mp4) of this project form the main page of this repo
 ### Here are some of the screenshots for the reference
 
